@@ -1,0 +1,47 @@
+version: '3.9'
+
+networks:
+  order:
+
+services:
+  apache:
+    image: ordersprinter
+    container_name: apache
+    hostname: apache
+    restart: always
+    ports:
+      - '9999:80'
+    working_dir: /var/www/html
+    volumes:
+      - ${APACHE_ROOT}:/var/www/html
+      - ${FAVICON}:/var/www/html/favicon.ico
+      - ${APACHE_SITES}:/etc/apache2/sites-enabled
+      - ${PHP_INI}:/usr/local/etc/php/conf.d/extra-php-config.ini
+    depends_on:
+      database:
+        condition: service_completed_successfully
+    networks:
+      - order
+
+  database:
+    image: mariadb:10.7.1-focal
+    container_name: mariadb
+    hostname: database
+    restart: always
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASS}'
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASS}'
+      MYSQL_DATABASE: '${MYSQL_DB}'
+    volumes:
+      - ${MYSQL_ROOT}:/var/lib/mysql
+      - ${MYSQL_CONF}:/etc/mysql/conf.d/mariadb.cnf
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+      interval: 30s
+      retries: 5
+    networks:
+      - order
+
