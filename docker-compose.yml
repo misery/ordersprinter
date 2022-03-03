@@ -19,7 +19,7 @@ services:
       - ${PHP_INI}:/usr/local/etc/php/conf.d/extra-php-config.ini
     depends_on:
       database:
-        condition: service_completed_successfully
+        condition: service_started
     networks:
       - order
 
