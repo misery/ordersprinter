@@ -4,27 +4,47 @@ networks:
   order:
 
 services:
-  apache:
-    image: ordersprinter
-    container_name: apache
-    hostname: apache
+  php:
+    build:
+      context: .
+    container_name: php
+    hostname: php
     restart: always
+    cap_add:
+      - SYS_PTRACE
     ports:
-      - '9999:80'
-    working_dir: /var/www/html
+      - '9898:9000'
+    working_dir: /var/www
     volumes:
-      - ${APACHE_ROOT}:/var/www/html
-      - ${FAVICON}:/var/www/html/favicon.ico
-      - ${APACHE_SITES}:/etc/apache2/sites-enabled
-      - ${PHP_INI}:/usr/local/etc/php/conf.d/extra-php-config.ini
+      - ./php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
+      - ./fpm.conf:/usr/local/etc/php-fpm.d/zz-fpm.conf
+      - ${WEB_ROOT}:/var/www
     depends_on:
       database:
         condition: service_started
     networks:
       - order
 
+  nginx:
+    image: nginx:1.20.2-alpine
+    container_name: nginx
+    hostname: nginx
+    restart: always
+    ports:
+      - '9999:80'
+    volumes:
+      - ${WEB_ROOT}:/var/www
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - ./favicon.ico:/var/www/favicon.ico
+    depends_on:
+      php:
+        condition: service_started
+    networks:
+      - order
+
+
   database:
-    image: mariadb:10.6.7-focal
+    image: mariadb:10.3.34-focal
     container_name: mariadb
     hostname: database
     restart: always
@@ -36,8 +56,8 @@ services:
       MYSQL_PASSWORD: '${MYSQL_PASS}'
       MYSQL_DATABASE: '${MYSQL_DB}'
     volumes:
-      - ${MYSQL_ROOT}:/var/lib/mysql
-      - ${MYSQL_CONF}:/etc/mysql/conf.d/mariadb.cnf
+      - mariadb10.3:/var/lib/mysql
+      - ./mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
       interval: 30s
@@ -45,3 +65,5 @@ services:
     networks:
       - order
 
+volumes:
+  mariadb10.3:
