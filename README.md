@@ -24,6 +24,7 @@ the absolute path to the ``webapp`` directory via ``WEB_ROOT``.
 If you use a Unix system you need to change the owner of
 ``webapp/php`` and ``webapp/php/config.php`` via ``chown 82:82``.
 
+Start up: ``docker-compose up -d``
 
 ## Portainer
 If you use [Portainer](https://github.com/portainer/portainer) for your Docker host.
@@ -44,12 +45,12 @@ directory. Otherwise Docker cannot access the local files from the
 git repository for the new container.
 This is an issue in portainer: [#6390](https://github.com/portainer/portainer/issues/6390)
 
-docker-compose.yml
+**docker-compose.yml**
 ```
 version: '3'
 
 services:
-  home:
+  portainer:
     image: portainer/portainer-ce:alpine
     container_name: portainer
     command: --data /volume1/docker/portainer
