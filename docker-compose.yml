@@ -12,8 +12,6 @@ services:
     restart: always
     cap_add:
       - SYS_PTRACE
-    ports:
-      - '9898:9000'
     working_dir: /var/www
     volumes:
       - ./php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini:ro
