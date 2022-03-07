@@ -33,7 +33,7 @@ services:
     volumes:
       - ${WEB_ROOT}:/var/www
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./favicon.ico:/var/www/favicon.ico
+      - ./favicon.ico:/favicon.ico:ro
     depends_on:
       php:
         condition: service_started
