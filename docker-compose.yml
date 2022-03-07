@@ -59,7 +59,7 @@ services:
       - mariadb10.3:/var/lib/mysql
       - ./mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf:ro
     healthcheck:
-      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+      test: mysqladmin ping -h 127.0.0.1 -u ${MYSQL_USER} --password=${MYSQL_PASS}
       interval: 10s
       retries: 5
     networks:
