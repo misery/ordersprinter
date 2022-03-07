@@ -33,9 +33,9 @@ services:
     ports:
       - '9999:80'
     volumes:
-      - ${WEB_ROOT}:/var/www:ro
+      - ${WEB_ROOT}:/var/www
       - ./default.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./favicon.ico:/var/www/favicon.ico:ro
+      - ./favicon.ico:/var/www/favicon.ico
     depends_on:
       php:
         condition: service_started
