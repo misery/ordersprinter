@@ -60,7 +60,7 @@ services:
       - ./mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf:ro
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
-      interval: 30s
+      interval: 10s
       retries: 5
     networks:
       - order
