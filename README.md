@@ -26,6 +26,8 @@ If you use a Unix system you need to change the owner of
 
 Start up: ``docker-compose up -d``
 
+Now you can access the WebUI via ``http://localhost:9999``.
+
 ## Portainer
 If you use [Portainer](https://github.com/portainer/portainer) for your Docker host.
 You can create a stack via a git repository, too.
