@@ -12,17 +12,18 @@ MYSQL_PASS=
 MYSQL_USER=
 MYSQL_ROOT_PASS=
 MYSQL_DB=
-WEB_ROOT=
 ```
 
 Provide your own database settings via ``MYSQL_`` variable. This will
 be used by Ordersprinter during installation.
 
-Since the image does ``NOT`` contain the sources of Ordersprinter you need
-to manage that externally. Just extract the ZIP of Ordersprinter and provide
-the absolute path to the ``webapp`` directory via ``WEB_ROOT``.
-If you use a Unix system you need to change the owner of
-``webapp/php`` and ``webapp/php/config.php`` via ``chown 82:82``.
+Since the image does ``NOT`` contain the sources of Ordersprinter it will download
+the newest version and create a volume for this.
+If you want to update Ordersprinter you can use the Updater of Ordersprinter or
+just shutdown the stack and the Ordersprinter volume. It will automatically
+fetch the newest version. After that you need to click the "Update to..." button.
+
+DO NOT remove MariaDB/MySQL volume! Otherwise you should have a backup somewhere else!
 
 Start up: ``docker-compose up -d``
 

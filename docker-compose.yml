@@ -12,14 +12,18 @@ services:
     restart: always
     cap_add:
       - SYS_PTRACE
-    working_dir: /var/www
+    working_dir: /var/www/html
+    environment:
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASS}'
+      MYSQL_DATABASE: '${MYSQL_DB}'
     volumes:
       - ./php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini:ro
       - ./fpm.conf:/usr/local/etc/php-fpm.d/zz-fpm.conf:ro
-      - ${WEB_ROOT}:/var/www
-    depends_on:
-      database:
-        condition: service_started
+      - ./ordersprinter-entrypoint:/usr/local/bin/docker-php-entrypoint:ro
+      - ordersprinter:/var/www/html
+    extra_hosts:
+      www.ordersprinter.de: 5.35.225.35
     networks:
       - order
 
@@ -31,11 +35,13 @@ services:
     ports:
       - '9999:80'
     volumes:
-      - ${WEB_ROOT}:/var/www
+      - ordersprinter:/var/www/html
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./favicon.ico:/favicon.ico:ro
     depends_on:
       php:
+        condition: service_started
+      database:
         condition: service_started
     networks:
       - order
@@ -64,4 +70,5 @@ services:
       - order
 
 volumes:
+  ordersprinter:
   mariadb10.3:

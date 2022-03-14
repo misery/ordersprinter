@@ -1,0 +1,41 @@
+#!/bin/sh
+set -e
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+	set -- php-fpm "$@"
+fi
+
+if [[ "$@" = "php-fpm" ]]; then
+	ROOT=/var/www/html
+
+	if [[ "$(ls -A $ROOT)" ]]; then
+		echo "Use existing ordersprinter files"
+	else
+		echo "Download ordersprinter files"
+
+		cd $ROOT
+		VERSION=$(curl -s https://www.ordersprinter.de/update/updateinfo.txt | head -n 1 | tr "." "_")
+		echo "Latest version: $VERSION"
+		if [[ -z "$VERSION" ]]; then
+			echo "Cannot fetch version"
+			exit 1
+		fi
+
+		curl -o os.zip https://www.ordersprinter.de/ordersprinter-${VERSION}.zip
+		unzip os.zip
+		rm os.zip
+
+		echo "Generate config1.php"
+		CONFIG1_PHP=webapp/php/config1.php
+		cp webapp/php/config.php $CONFIG1_PHP
+		sed -i "s/'MYSQL_HOST','localhost'/'MYSQL_HOST','database'/g" $CONFIG1_PHP
+		sed -i "s/'MYSQL_USER',  'dbuser'/'MYSQL_USER',  '$MYSQL_USER'/g" $CONFIG1_PHP
+		sed -i "s/'MYSQL_PASSWORD',  'dbpass'/'MYSQL_PASSWORD',  '$MYSQL_PASSWORD'/g" $CONFIG1_PHP
+		sed -i "s/'MYSQL_DB', 'pos'/'MYSQL_DB', '$MYSQL_DATABASE'/g" $CONFIG1_PHP
+
+		chown -R www-data: webapp
+	fi
+fi
+
+exec "$@"
