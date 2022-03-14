@@ -48,7 +48,7 @@ services:
 
 
   database:
-    image: mariadb:10.3.34-focal
+    image: mariadb:10.6.7-focal
     container_name: mariadb
     hostname: database
     restart: always
@@ -60,7 +60,7 @@ services:
       MYSQL_PASSWORD: '${MYSQL_PASS}'
       MYSQL_DATABASE: '${MYSQL_DB}'
     volumes:
-      - mariadb10.3:/var/lib/mysql
+      - mariadb10.6:/var/lib/mysql
       - ./mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf:ro
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u ${MYSQL_USER} --password=${MYSQL_PASS}
@@ -71,4 +71,4 @@ services:
 
 volumes:
   ordersprinter:
-  mariadb10.3:
+  mariadb10.6:
