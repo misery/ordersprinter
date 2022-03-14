@@ -23,7 +23,7 @@ If you want to update Ordersprinter you can use the Updater of Ordersprinter or
 just shutdown the stack and the Ordersprinter volume. It will automatically
 fetch the newest version. After that you need to click the "Update to..." button.
 
-DO NOT remove MariaDB/MySQL volume! Otherwise you should have a backup somewhere else!
+**DO NOT** remove MariaDB/MySQL volume! Otherwise you should have a backup somewhere else!
 
 Start up: ``docker-compose up -d``
 
