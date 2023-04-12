@@ -28,7 +28,7 @@ services:
       - order
 
   nginx:
-    image: nginx:1.22.1-alpine
+    image: nginx:1.24.0-alpine
     container_name: nginx
     hostname: nginx
     restart: always
