@@ -1,6 +1,6 @@
 FROM php:8.2.4-fpm-alpine3.17
 
-RUN apk upgrade -a -U
+RUN apk --no-cache upgrade -a -U
 
 WORKDIR /var/www/html
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
