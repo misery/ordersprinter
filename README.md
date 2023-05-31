@@ -66,4 +66,4 @@ services:
       - "9000:9000"
 ```
 
-Start up: ``docker-compose up -d``
+Start up: ``docker-compose up -d --build``
