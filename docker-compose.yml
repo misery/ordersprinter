@@ -48,7 +48,7 @@ services:
 
 
   database:
-    image: mariadb:10.6.13-focal
+    image: mariadb:10.6.14-focal
     container_name: mariadb
     hostname: database
     restart: always
