@@ -1,7 +1,7 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/misery/ordersprinter/blob/main/LICENSE)
 
 # Ordersprinter in Docker
-This repository is to easy deploy and initialize [Ordersprinter](https://www.ordersprinter.de) via docker-compose.
+This repository is to easy deploy and initialize [Ordersprinter](https://www.ordersprinter.de) via docker compose.
 
 
 ## Cmdline
@@ -25,7 +25,7 @@ fetch the newest version. After that you need to click the "Update to..." button
 
 **DO NOT** remove MariaDB/MySQL volume! Otherwise you should have a backup somewhere else!
 
-Start up: ``docker-compose up -d``
+Start up: ``docker compose up -d --build``
 
 Now you can access the WebUI via ``http://localhost:9999``.
 
