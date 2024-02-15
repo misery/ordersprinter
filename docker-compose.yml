@@ -48,7 +48,7 @@ services:
 
 
   database:
-    image: mariadb:10.11.6-jammy
+    image: mariadb:10.11.7-jammy
     container_name: mariadb
     hostname: database
     restart: always
