@@ -6,10 +6,10 @@ if [ "${1#-}" != "$1" ]; then
 	set -- php-fpm "$@"
 fi
 
-if [[ "$@" = "php-fpm" ]]; then
+if [ "$*" = "php-fpm" ]; then
 	ROOT=/var/www/html
 
-	if [[ "$(ls -A $ROOT)" ]]; then
+	if [ "$(ls -A $ROOT)" ]; then
 		echo "Use existing ordersprinter files"
 	else
 		echo "Download ordersprinter files"
@@ -17,12 +17,12 @@ if [[ "$@" = "php-fpm" ]]; then
 		cd $ROOT
 		VERSION=$(curl -s https://www.ordersprinter.de/update/updateinfo.txt | head -n 1 | tr "." "_")
 		echo "Latest version: $VERSION"
-		if [[ -z "$VERSION" ]]; then
+		if [ -z "$VERSION" ]; then
 			echo "Cannot fetch version"
 			exit 1
 		fi
 
-		curl -o os.zip https://www.ordersprinter.de/ordersprinter-${VERSION}.zip
+		curl -o os.zip https://www.ordersprinter.de/ordersprinter-"${VERSION}".zip
 		unzip os.zip
 		rm os.zip
 
