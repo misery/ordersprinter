@@ -1,4 +1,4 @@
-FROM php:8.3.6-fpm-alpine3.19
+FROM php:8.5.10-fpm-alpine3.23
 
 RUN apk --no-cache upgrade -a -U
 

@@ -1,5 +1,3 @@
-version: '3.9'
-
 networks:
   order:
 
@@ -23,12 +21,12 @@ services:
       - ./ordersprinter-entrypoint:/usr/local/bin/docker-php-entrypoint:ro
       - ordersprinter:/var/www/html
     extra_hosts:
-      www.ordersprinter.de: 5.35.225.35
+      www.ordersprinter.de: 5.35.226.167
     networks:
       - order
 
   nginx:
-    image: nginx:1.24.0-alpine
+    image: nginx:1.30.4-alpine
     container_name: nginx
     hostname: nginx
     restart: always
@@ -48,7 +46,7 @@ services:
 
 
   database:
-    image: mariadb:10.11.7-jammy
+    image: mariadb:12.3.3-ubi
     container_name: mariadb
     hostname: database
     restart: always

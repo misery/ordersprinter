@@ -27,14 +27,14 @@ if [ "$*" = "php-fpm" ]; then
 		rm os.zip
 
 		echo "Generate config1.php"
-		CONFIG1_PHP=webapp/php/config1.php
-		cp webapp/php/config.php $CONFIG1_PHP
+		CONFIG1_PHP=coresystem/php/config1.php
+		cp coresystem/php/config.php $CONFIG1_PHP
 		sed -i "s/'MYSQL_HOST','localhost'/'MYSQL_HOST','database'/g" $CONFIG1_PHP
 		sed -i "s/'MYSQL_USER',  'dbuser'/'MYSQL_USER',  '$MYSQL_USER'/g" $CONFIG1_PHP
 		sed -i "s/'MYSQL_PASSWORD',  'dbpass'/'MYSQL_PASSWORD',  '$MYSQL_PASSWORD'/g" $CONFIG1_PHP
 		sed -i "s/'MYSQL_DB', 'pos'/'MYSQL_DB', '$MYSQL_DATABASE'/g" $CONFIG1_PHP
 
-		chown -R www-data: webapp
+		chown -R www-data: coresystem
 	fi
 fi
 
